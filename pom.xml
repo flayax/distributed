@@ -7,6 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>vip-0722</module>
+      <module>vip-0723</module>
   </modules>
   <packaging>pom</packaging>
 

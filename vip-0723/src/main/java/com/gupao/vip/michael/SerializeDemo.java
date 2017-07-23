@@ -35,7 +35,8 @@ public class SerializeDemo {
             System.out.println("序列化成功: "+new File("person").length());
 
             Person person2=(Person)ois.readObject();
-            System.out.println(person1==person2);
+            System.out.println(person1+"->"+person2);
+
             oo.close();
         } catch (IOException e) {
             e.printStackTrace();
