@@ -8,6 +8,8 @@
   <modules>
     <module>vip-0722</module>
       <module>vip-0723</module>
+      <module>vip-0729</module>
+      <module>vip-0730</module>
   </modules>
   <packaging>pom</packaging>
 

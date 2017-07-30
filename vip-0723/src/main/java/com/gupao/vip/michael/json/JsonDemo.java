@@ -28,13 +28,13 @@ public class JsonDemo {
     }
 
     public static void main(String[] args) throws IOException {
-        excuteWithJack();
+//        excuteWithJack();
 
         excuteWithFastJson();
 
-        excuteWithProtoBuf();
-
-        excuteWithHessian();
+//        excuteWithProtoBuf();
+//
+//        excuteWithHessian();
     }
 
     private static void excuteWithJack() throws IOException {
