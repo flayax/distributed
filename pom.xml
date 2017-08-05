@@ -10,6 +10,7 @@
       <module>vip-0723</module>
       <module>vip-0729</module>
       <module>vip-0730</module>
+      <module>vip-0805</module>
   </modules>
   <packaging>pom</packaging>
 
