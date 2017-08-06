@@ -4,6 +4,7 @@ import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +22,11 @@ public class ApiOperatorDemo implements Watcher{
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         zookeeper=new ZooKeeper(CONNECTSTRING, 5000, new ApiOperatorDemo());
         countDownLatch.await();
-        System.out.println(zookeeper.getState());
+       /* System.out.println(zookeeper.getState());
 
         //创建节点
         String result=zookeeper.create("/node1","123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-        zookeeper.getData("/node1",new ApiOperatorDemo(),stat); //增加一个
+        zookeeper.getData("/node1",new ZkClientApiOperatorDemo(),stat); //增加一个
         System.out.println("创建成功："+result);
 
         //修改数据
@@ -35,9 +36,9 @@ public class ApiOperatorDemo implements Watcher{
         zookeeper.setData("/node1","mic234".getBytes(),-1);
         Thread.sleep(2000);
 
-       /* //删除节点
+       *//* //删除节点
         zookeeper.delete("/mic/mic1",-1);
-        Thread.sleep(2000);*/
+        Thread.sleep(2000);*//*
 
         //创建节点和子节点
         String path="/node11";
@@ -52,7 +53,14 @@ public class ApiOperatorDemo implements Watcher{
         }
         //修改子路径
         zookeeper.setData(path+"/node1","mic123".getBytes(),-1);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);*/
+
+
+        //获取指定节点下的子节点
+        List<String> childrens=zookeeper.getChildren("/node",true);
+        System.out.println(childrens);
+
+
     }
 
     public void process(WatchedEvent watchedEvent) {
