@@ -27,7 +27,7 @@ public class MasterSelector {
 
     private UserCenter master;  //master节点
 
-    private static boolean isRunning=false;
+    private boolean isRunning=false;
 
     ScheduledExecutorService scheduledExecutorService= Executors.newScheduledThreadPool(1);
 

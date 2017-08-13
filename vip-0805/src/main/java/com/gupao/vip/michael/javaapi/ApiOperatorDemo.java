@@ -1,9 +1,12 @@
 package com.gupao.vip.michael.javaapi;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +25,11 @@ public class ApiOperatorDemo implements Watcher{
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         zookeeper=new ZooKeeper(CONNECTSTRING, 5000, new ApiOperatorDemo());
         countDownLatch.await();
+        ACL acl=new ACL(ZooDefs.Perms.ALL,new Id("ip","192.168.11.129"));
+        List<ACL> acls=new ArrayList<>();
+        acls.add(acl);
+//        zookeeper.create("/authTest","111".getBytes(),acls,CreateMode.PERSISTENT);
+        zookeeper.getData("/authTest",true,new Stat());
        /* System.out.println(zookeeper.getState());
 
         //创建节点
@@ -57,8 +65,8 @@ public class ApiOperatorDemo implements Watcher{
 
 
         //获取指定节点下的子节点
-        List<String> childrens=zookeeper.getChildren("/node",true);
-        System.out.println(childrens);
+       /* List<String> childrens=zookeeper.getChildren("/node",true);
+        System.out.println(childrens);*/
 
 
     }
