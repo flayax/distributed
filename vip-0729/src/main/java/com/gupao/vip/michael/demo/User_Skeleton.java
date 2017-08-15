@@ -40,6 +40,7 @@ public class User_Skeleton extends Thread{
                     ObjectOutputStream outputStream=new ObjectOutputStream(socket.getOutputStream());
                     outputStream.writeInt(age);
                     outputStream.flush();
+                    break;
                 }
             }
         } catch (IOException e) {

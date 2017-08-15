@@ -28,6 +28,7 @@ public class User_Stub extends User{
         outputStream.flush();
 
         ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
-        return objectInputStream.readInt();
+        int age=objectInputStream.readInt();
+        return age;
     }
 }
