@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit;
  * 风骚的Michael 老师
  */
 public class ApiOperatorDemo implements Watcher{
-    private final static String CONNECTSTRING="192.168.11.129:2181,192.168.11.134:2181," +
-            "192.168.11.135:2181,192.168.11.136:2181";
+    private final static String CONNECTSTRING="192.168.11.129:2181,192.168.11.137:2181," +
+            "192.168.11.138:2181";
     private static CountDownLatch countDownLatch=new CountDownLatch(1);
     private static ZooKeeper zookeeper;
     private static Stat stat=new Stat();
@@ -28,8 +28,10 @@ public class ApiOperatorDemo implements Watcher{
         ACL acl=new ACL(ZooDefs.Perms.ALL,new Id("ip","192.168.11.129"));
         List<ACL> acls=new ArrayList<>();
         acls.add(acl);
-//        zookeeper.create("/authTest","111".getBytes(),acls,CreateMode.PERSISTENT);
-        zookeeper.getData("/authTest",true,new Stat());
+        zookeeper.exists("/authTest",true);
+        zookeeper.create("/authTest","111".getBytes(),acls,CreateMode.PERSISTENT);
+        System.in.read();
+//        zookeeper.getData("/authTest",true,new Stat());
        /* System.out.println(zookeeper.getState());
 
         //创建节点

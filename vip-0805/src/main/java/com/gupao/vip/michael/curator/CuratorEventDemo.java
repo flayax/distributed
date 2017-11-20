@@ -43,7 +43,6 @@ public class CuratorEventDemo {
 
         PathChildrenCache cache=new PathChildrenCache(curatorFramework,"/event",true);
         cache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
-        // Normal / BUILD_INITIAL_CACHE /POST_INITIALIZED_EVENT
 
         cache.getListenable().addListener((curatorFramework1,pathChildrenCacheEvent)->{
             switch (pathChildrenCacheEvent.getType()){
@@ -63,11 +62,10 @@ public class CuratorEventDemo {
         curatorFramework.create().withMode(CreateMode.PERSISTENT).forPath("/event","event".getBytes());
         TimeUnit.SECONDS.sleep(1);
         System.out.println("1");
-        curatorFramework.create().withMode(CreateMode.EPHEMERAL).forPath("/event/event1","1".getBytes());
+        curatorFramework.create().withMode(CreateMode.PERSISTENT).forPath("/event/event1","1".getBytes());
         TimeUnit.SECONDS.sleep(1);
         System.out.println("2");
-
-        curatorFramework.setData().forPath("/event/event1","222".getBytes());
+        curatorFramework.setData().forPath("/event/event1","99".getBytes());
         TimeUnit.SECONDS.sleep(1);
         System.out.println("3");
 
