@@ -3,15 +3,15 @@
 
 ## 课程大纲
  如果需要获得更详细的预习资料，请下载当前目录下的ppt文件
-- ** kafka产生背景**
-- ** kafka的架构分析**
-- ** kafka集群安装部署**
-- ** kafka的基本操作**
-- ** kafka实现细节（消息、分区、日志保留策略）**
-- ** kafka消息发送可靠性机制**
-- ** kafka副本机制**
-- ** kafka Java api使用**
-- ** kafka和activeMQ的对比**
+- **kafka产生背景**
+- **kafka的架构分析**
+- **kafka集群安装部署**
+- **kafka的基本操作**
+- **kafka实现细节（消息、分区、日志保留策略）**
+- **kafka消息发送可靠性机制**
+- **kafka副本机制**
+- **kafka Java api使用**
+- **kafka和activeMQ的对比**
 
 ## 课前准备
 - **3台虚拟机（centos7）**
