@@ -16,3 +16,16 @@
 ## 关于JTW的解决方案，大家可以提前预习
 
 官方网址：jwt.io
+
+#Q&A
+
+**如何解决token跨域问题**
+> 1. 把token返回给客户端，让客户端存储在localstorage中或者cookie中
+> 2. 一般sso都是针对同一个一级域名不同的二级域名来做，所以设置cookie的domain为一级域名即可
+
+**cookie被盗用问题如何解决**
+> 1. 设置httpOnly，不允许js调用获得cookie
+> 2. 增加客户端签名认证以及时间戳
+
+
+
