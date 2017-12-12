@@ -1,52 +1,31 @@
-# 数据库分库分表
+# 分布式架构下session共享及解决方案
 
-> 在互联网行业中，最大的特点是并发量高、数据量大；为了应对这两个特点，后端的技术架构需要使用各种技术来支撑；而这个专题所讲的是关于数据库层面的优化
-> 当数据库的访问量到达一定的瓶颈的时候，当数据库单表数据比较大严重影响ddl性能的时候。我们应该根据什么思路去做优化和调整
+> 分布式架构下，基于传统的session存储会话以及访问授权的方式已经无法适用了。对于这个问题如何解决？
+业内已经提供了很多经过生产验证的解决方案，比如session复制、基于第三方存储中间件统一管理session、或者通过token机制来
+做授权。本次课会基于这些解决方案做一个详细的说明。
 
 ## 课程大纲
-- **持久化存储在大型分布式架构下部分需要应对的问题**
-- **如何去做分库分表**
-- **拆分策略**
-- **分库分表带来的问题及解决方案**
-- **如何知道当前的系统需要做分库分表**
-- **Mysql的读写分离实战**
-- **Mysql主主复制以及基于keepalived实现双主高可用**
-- **基于HAProxy实现**
-- **主从同步延迟问题及解决方案**
-
-## centos7安装mysql5.7操作步骤
-1. 下载mysql的repo源
-> wget http://repo.mysql.com/mysql57-community-release-el7-8.noarch.rpm
-2. 安装源
-> rpm -ivh mysql57-community-release-el7-8.noarch.rpm
-3. 安装数据库
-> yum install mysql-server
-4. 启动数据库
-> systemctl start mysqld
-
-## 登录到mysql
-1. 5.7版本默认对于root帐号有一个随机密码，可以通过 grep "password" /var/log/mysqld.log获得，root@localhost: 此处为随机密码
-
-2. 运行mysql -uroot -p 回车
-
-3. 粘贴随机密码
-
-## 操作
-1. 默认的随机密码是没办法直接对数据库做操作的，需要修改密码，然后，5.7版本用了validate_password密码加强插件，因此在修改密码的时候绝对不是 123456 能糊弄过去的。需要严格按照规范去设置密码
-
-2. 但是，如果想让密码简单点也可以，降低安全策略， 登录到mysql客户端执行如下两条命令
-set global validate_password_length=1;
-set global validate_password_policy=0; 
-
-3. 这样就能设置简单的密码了，但是密码长度必须是大于等于4位
-
-## 赋权操作
-> 默认情况下其他服务器的客户端不能直接访问mysql服务端，需要对ip授权
-> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+- **session原理分析**
+- **cookie和session的联系**
+- **分布式环境下session共享问题**
+- **基于token方式的验证方案**
+- **企业级常用解决方案之基于JTW认证**
+- **代码实践-jwt**
 
 
+## 关于JTW的解决方案，大家可以提前预习
 
+官方网址：jwt.io
 
+#Q&A
+
+**如何解决token跨域问题**
+> 1. 把token返回给客户端，让客户端存储在localstorage中或者cookie中
+> 2. 一般sso都是针对同一个一级域名不同的二级域名来做，所以设置cookie的domain为一级域名即可
+
+**cookie被盗用问题如何解决**
+> 1. 设置httpOnly，不允许js调用获得cookie
+> 2. 增加客户端签名认证以及时间戳
 
 
 
