@@ -13,6 +13,11 @@
 - **Mysql主主复制以及基于keepalived实现双主高可用**
 - **基于HAProxy实现**
 - **主从同步延迟问题及解决方案**
+- **认识Mycat及Mycat安装**
+- **Mycat数据切分实战**
+- **Mycat读写分离实战**
+- **Mycat分片策略**
+- **Mycat全局表配置**
 
 ## centos7安装mysql5.7操作步骤
 1. 下载mysql的repo源
