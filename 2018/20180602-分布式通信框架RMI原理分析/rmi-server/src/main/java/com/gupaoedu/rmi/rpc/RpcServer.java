@@ -10,9 +10,11 @@ import java.util.concurrent.Executors;
  * 腾讯课堂搜索 咕泡学院
  * 加群获取视频：608583947
  * 风骚的Michael 老师
+ *
+ * 用于发布一个远程服务
  */
 public class RpcServer {
-
+    //创建一个线程池
     private static final ExecutorService executorService=Executors.newCachedThreadPool();
 
     public void publisher(final Object service,int port){
@@ -20,8 +22,9 @@ public class RpcServer {
         try{
             serverSocket=new ServerSocket(port);  //启动一个服务监听
 
-            while(true){
-                Socket socket=serverSocket.accept();
+            while(true){ //循环监听
+                Socket socket=serverSocket.accept(); //监听服务
+                //通过线程池去处理请求
                 executorService.execute(new ProcessorHandler(socket,service));
             }
         } catch (IOException e) {
