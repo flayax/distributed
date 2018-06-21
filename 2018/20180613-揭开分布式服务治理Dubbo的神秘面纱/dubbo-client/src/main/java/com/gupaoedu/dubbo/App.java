@@ -1,5 +1,7 @@
 package com.gupaoedu.dubbo;
 
+import com.alibaba.dubbo.common.extension.ExtensionLoader;
+import com.alibaba.dubbo.rpc.Protocol;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -15,13 +17,15 @@ public class App
                 ClassPathXmlApplicationContext
                 ("dubbo-client.xml");
 
-        for(int i=0;i<10;i++) {
-            //得到IGpHello的远程代理对象
+      /*  Protocol protocol=ExtensionLoader.getExtensionLoader(Protocol.class).
+                getExtension("defineProtocol");
+        System.out.println(protocol.getDefaultPort());*/
+
+       /*     //得到IGpHello的远程代理对象
             IGpHello iGpHello = (IGpHello) context.getBean("gpHelloService");
 
             System.out.println(iGpHello.sayHello("Mic"));
-            Thread.sleep(1000);
-        }
+            Thread.sleep(4000);*/
 
         System.in.read();
     }
