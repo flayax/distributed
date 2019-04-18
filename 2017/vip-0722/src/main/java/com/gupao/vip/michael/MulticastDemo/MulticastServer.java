@@ -23,8 +23,10 @@ public class MulticastServer {
 
             for(int i=0;i<10;i++){
                 String data="Hello Mic";
-                byte[] bytes=data.getBytes();
-                socket.send(new DatagramPacket(bytes,bytes.length,group,8888));
+                byte[] bytes = data.getBytes();
+                DatagramPacket msgPacket = new DatagramPacket(bytes, bytes.length, group, 8888);
+                socket.send(msgPacket);
+//                socket.send(new DatagramPacket(bytes,bytes.length,group,8888));
                 TimeUnit.SECONDS.sleep(2);
             }
 

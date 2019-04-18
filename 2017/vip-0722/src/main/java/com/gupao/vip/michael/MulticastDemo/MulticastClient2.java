@@ -24,7 +24,7 @@ public class MulticastClient2 {
             byte[] buf=new byte[256];
             while(true){
                 DatagramPacket msgPacket=new DatagramPacket(buf,buf.length);
-                socket.receive(msgPacket);
+                socket.receive(msgPacket); // 堵塞状态
 
                 String msg=new String(msgPacket.getData());
                 System.out.println("接收到的数据："+msg);

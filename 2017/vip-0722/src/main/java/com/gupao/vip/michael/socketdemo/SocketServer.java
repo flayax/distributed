@@ -18,7 +18,7 @@ public class SocketServer {
         try{
             serverSocket=new ServerSocket(8888);  //启动一个服务
             while(true){
-                Socket socket=serverSocket.accept();  //等待一个接收请求
+                Socket socket=serverSocket.accept();  //等待一个接收请求，阻塞状态
                 new Thread(()->{
                     try {
                         //读取数据

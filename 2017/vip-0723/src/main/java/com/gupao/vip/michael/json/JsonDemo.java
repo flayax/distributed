@@ -28,7 +28,7 @@ public class JsonDemo {
     }
 
     public static void main(String[] args) throws IOException {
-//        excuteWithJack();
+        excuteWithJack();
 
         excuteWithFastJson();
 
@@ -41,15 +41,17 @@ public class JsonDemo {
         Person person=init();
 
         ObjectMapper mapper=new ObjectMapper();
+        String text = null;
         byte[] writeBytes=null;
         Long start=System.currentTimeMillis();
         for(int i=0;i<10000;i++){
-            writeBytes=mapper.writeValueAsBytes(person);
+            text = mapper.writeValueAsString(person);
+//            writeBytes=mapper.writeValueAsBytes(person);
         }
         System.out.println("Json序列化："+(System.currentTimeMillis()-start)+"ms : " +
-                "总大小->"+writeBytes.length);
+                "总大小->"+text.getBytes().length);
 
-        Person person1=mapper.readValue(writeBytes,Person.class);
+        Person person1=mapper.readValue(text,Person.class);
         System.out.println(person1);
     }
 

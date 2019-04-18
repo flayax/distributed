@@ -7,8 +7,9 @@ import java.io.Serializable;
  * 加群获取视频：608583947
  * 风骚的Michael 老师
  */
-public class User extends SuperUser{
+public class User extends SuperUser implements Serializable {
 
+    private static final long serialVersionUID = 774129024225578991L;
 
     @Override
     public String toString() {

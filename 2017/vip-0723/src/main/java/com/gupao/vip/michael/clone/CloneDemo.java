@@ -24,6 +24,9 @@ public class CloneDemo {
         student2.getTeacher().setName("james");
         System.out.println(student2);
 
+        System.out.println(student == student2);
+        System.out.println(student.getTeacher() == student2.getTeacher());
+
 
     }
 }

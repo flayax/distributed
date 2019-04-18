@@ -13,6 +13,6 @@ public class SayHelloImpl implements ISayHello{
 
     public String sayHello(String name) {
         System.out.println("call sayHello()");
-        return "Hello ,"+name+",I'am 菲菲";
+        return "Hello ,"+name+",I'am test";
     }
 }

@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit;
  * 风骚的Michael 老师
  */
 public class AuthControlDemo implements Watcher{
-    private final static String CONNECTSTRING="192.168.11.129:2181,192.168.11.134:2181," +
-            "192.168.11.135:2181,192.168.11.136:2181";
+    private final static String CONNECTSTRING="192.168.251.221:2181,192.168.251.124:2181," +
+            "192.168.251.122:2181,192.168.251.11:2181";
     private static CountDownLatch countDownLatch=new CountDownLatch(1);
     private static CountDownLatch countDownLatch2=new CountDownLatch(1);
 

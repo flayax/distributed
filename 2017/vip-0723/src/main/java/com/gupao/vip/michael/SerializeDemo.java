@@ -27,6 +27,7 @@ public class SerializeDemo {
             person.setName("mic");
             oo.writeObject(person);
             oo.flush();
+
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("person")));
             Person person1=(Person)ois.readObject();
             person.setName("mic1");
@@ -36,6 +37,9 @@ public class SerializeDemo {
 
             Person person2=(Person)ois.readObject();
             System.out.println(person1+"->"+person2);
+
+            System.out.println(person == person1);
+            System.out.println(person1 == person2);
 
             oo.close();
         } catch (IOException e) {
