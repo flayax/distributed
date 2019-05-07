@@ -10,8 +10,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  * 风骚的Michael 老师
  */
 public class CuratorCreateSessionDemo {
-    private final static String CONNECTSTRING="192.168.11.129:2181,192.168.11.134:2181," +
-            "192.168.11.135:2181,192.168.11.136:2181";
+    private final static String CONNECTSTRING="192.168.251.221:2181,192.168.251.124:2181," +
+            "192.168.251.122:2181,192.168.251.11:2181";
     public static void main(String[] args) {
         //创建会话的两种方式 normal
         CuratorFramework curatorFramework= CuratorFrameworkFactory.
@@ -22,7 +22,7 @@ public class CuratorCreateSessionDemo {
         //fluent风格
         CuratorFramework curatorFramework1=CuratorFrameworkFactory.builder().connectString(CONNECTSTRING).sessionTimeoutMs(5000).
                 retryPolicy(new ExponentialBackoffRetry(1000,3)).
-                namespace("/curator").build();
+                namespace("curator").build();
 
         curatorFramework1.start();
         System.out.println("success");

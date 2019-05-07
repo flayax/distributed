@@ -24,13 +24,19 @@ public class ZookeeperClient {
     //获取连接
     public static ZooKeeper getInstance() throws IOException, InterruptedException {
         final CountDownLatch conectStatus=new CountDownLatch(1);
-        ZooKeeper zooKeeper=new ZooKeeper(CONNECTSTRING, sessionTimeout, new Watcher() {
+        // lambda表达式下的匿名类，效果同下方代码
+        ZooKeeper zooKeeper = new ZooKeeper(CONNECTSTRING, sessionTimeout, (event)->{
+            if(event.getState()== Watcher.Event.KeeperState.SyncConnected){
+                conectStatus.countDown();
+            }
+        });
+        /*ZooKeeper zooKeeper=new ZooKeeper(CONNECTSTRING, sessionTimeout, new Watcher() {
             public void process(WatchedEvent event) {
                 if(event.getState()== Event.KeeperState.SyncConnected){
                     conectStatus.countDown();
                 }
             }
-        });
+        });*/
         conectStatus.await();
         return zooKeeper;
     }

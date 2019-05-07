@@ -1,9 +1,9 @@
 package com.gupao.vip.michael.curator;
 
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.cache.NodeCache;
-import org.apache.curator.framework.recipes.cache.PathChildrenCache;
+import org.apache.curator.framework.recipes.cache.*;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.Stat;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,22 +28,28 @@ public class CuratorEventDemo {
         /**
          * 节点变化NodeCache
          */
-       /* NodeCache cache=new NodeCache(curatorFramework,"/curator",false);
+        /*NodeCache cache=new NodeCache(curatorFramework,"/curator",false);
         cache.start(true);
-
+        // lambda表达式下的匿名类，效果同下方代码
         cache.getListenable().addListener(()-> System.out.println("节点数据发生变化,变化后的结果" +
                 "："+new String(cache.getCurrentData().getData())));
+//        cache.getListenable().addListener(new NodeCacheListener() {
+//            @Override
+//            public void nodeChanged() throws Exception {
+//                System.out.println("节点数据发生变化,变化后的结果" + new String(cache.getCurrentData().getData()));
+//            }
+//        });
 
-        curatorFramework.setData().forPath("/curator","菲菲".getBytes());*/
+        curatorFramework.setData().forPath("/curator","789".getBytes());*/
 
 
         /**
          * PatchChildrenCache
+         * 构建/event子节点监听
          */
-
         PathChildrenCache cache=new PathChildrenCache(curatorFramework,"/event",true);
         cache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
-
+        // 添加节点监听策略
         cache.getListenable().addListener((curatorFramework1,pathChildrenCacheEvent)->{
             switch (pathChildrenCacheEvent.getType()){
                 case CHILD_ADDED:
@@ -58,19 +64,24 @@ public class CuratorEventDemo {
                 default:break;
             }
         });
-
-        curatorFramework.create().withMode(CreateMode.PERSISTENT).forPath("/event","event".getBytes());
-        TimeUnit.SECONDS.sleep(1);
-        System.out.println("1");
+        // 检测检点是否存在
+        Stat eventNodeStat = curatorFramework.checkExists().forPath("/event");
+        if(eventNodeStat == null) {
+            curatorFramework.create().withMode(CreateMode.PERSISTENT).forPath("/event","event".getBytes());
+            TimeUnit.SECONDS.sleep(1);
+            System.out.println("1");
+        }
         curatorFramework.create().withMode(CreateMode.PERSISTENT).forPath("/event/event1","1".getBytes());
         TimeUnit.SECONDS.sleep(1);
         System.out.println("2");
         curatorFramework.setData().forPath("/event/event1","99".getBytes());
         TimeUnit.SECONDS.sleep(1);
         System.out.println("3");
-
         curatorFramework.delete().forPath("/event/event1");
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("4");
+        curatorFramework.delete().forPath("/event");
+        System.out.println("5");
 
         System.in.read();
 

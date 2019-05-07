@@ -28,13 +28,11 @@ public class CuratorOperatorDemo {
         System.out.println("连接成功.........");
 
         //fluent风格
-
         /**
          * 创建节点
          */
-
-       /* try {
-            String result=curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).
+        /*try {
+            String result = curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).
                     forPath("/curator/curator1/curator11","123".getBytes());
 
             System.out.println(result);
@@ -42,34 +40,35 @@ public class CuratorOperatorDemo {
             e.printStackTrace();
         }*/
 
+
         /**
          * 删除节点
          */
         /*try {
             //默认情况下，version为-1
-            curatorFramework.delete().deletingChildrenIfNeeded().forPath("/node11");
-
+            curatorFramework.delete().deletingChildrenIfNeeded().forPath("/curator");
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+
 
         /**
          * 查询
          */
         /*Stat stat=new Stat();
         try {
-            byte[] bytes=curatorFramework.getData().storingStatIn(stat).forPath("/curator");
+            byte[] bytes=curatorFramework.getData().storingStatIn(stat).forPath("/node1");
             System.out.println(new String(bytes)+"-->stat:"+stat);
         } catch (Exception e) {
             e.printStackTrace();
         }*/
 
+
         /**
          * 更新
          */
-
-       /* try {
-            Stat stat=curatorFramework.setData().forPath("/curator","123".getBytes());
+        /*try {
+            Stat stat=curatorFramework.setData().forPath("/curator","node_change".getBytes());
             System.out.println(stat);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +99,6 @@ public class CuratorOperatorDemo {
         /**
          * 事务操作（curator独有的）
          */
-
         try {
             Collection<CuratorTransactionResult> resultCollections=curatorFramework.inTransaction().create().forPath("/trans","111".getBytes()).and().
                     setData().forPath("/curator","111".getBytes()).and().commit();
