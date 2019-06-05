@@ -35,7 +35,7 @@ public class MasterSelector {
         System.out.println("["+server+"] 去争抢master权限");
         this.server = server;
         this.zkClient=zkClient;
-
+        // 注册监听器
         this.dataListener= new IZkDataListener() {
             @Override
             public void handleDataChange(String s, Object o) throws Exception {
@@ -78,23 +78,26 @@ public class MasterSelector {
             return ;
         }
         try {
+            // 尝试创建master节点，若成功则此节点即为master节点
             zkClient.createEphemeral(MASTER_PATH, server);
             master=server; //把server节点赋值给master
             System.out.println(master+"->我现在已经是master，你们要听我的");
 
             //定时器
-            //master释放(master 出现故障）,没5秒钟释放一次
+            //master释放(模拟master出现故障）,没5秒钟释放一次
             scheduledExecutorService.schedule(()->{
                 releaseMaster();//释放锁
             },2, TimeUnit.SECONDS);
         }catch (ZkNodeExistsException e){
-            //表示master已经存在
-            UserCenter userCenter=zkClient.readData(MASTER_PATH,true);
-            if(userCenter==null) {
+            // 异常则表示master已经存在，获取当前master节点
+            UserCenter userCenter = zkClient.readData(MASTER_PATH,true);
+            // 若master不存在（此时恰巧释放），则继续递归选举，直到选出master（不为null）
+            if(userCenter == null) {
                 System.out.println("启动操作：");
                 chooseMaster(); //再次获取master
             }else{
-                master=userCenter;
+                // 若存在，则设置该节点为master节点
+                master = userCenter;
             }
         }
     }

@@ -42,14 +42,14 @@ public class DistributeLock {
     //获取锁的方法
     public boolean lock(){
         try {
-            //LOCKS/00000001
+            // 临时有序子节点路径样式：LOCKS/00000001
             lockID=zooKeeper.create(ROOT_LOCKS+"/",data, ZooDefs.Ids.
                     OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 
             System.out.println(Thread.currentThread().getName()+"->成功创建了lock节点["+lockID+"], 开始去竞争锁");
 
             List<String> childrenNodes=zooKeeper.getChildren(ROOT_LOCKS,true);//获取根节点下的所有子节点
-            //排序，从小到大
+            // 根节点下所有子节点路径，放入有序集合进行排序，从小到大
             SortedSet<String> sortedSet=new TreeSet<String>();
             for(String children:childrenNodes){
                 sortedSet.add(ROOT_LOCKS+"/"+children);
@@ -60,11 +60,13 @@ public class DistributeLock {
                 System.out.println(Thread.currentThread().getName()+"->成功获得锁，lock节点为:["+lockID+"]");
                 return true;
             }
+            // 获取小于该节点的有序集合
             SortedSet<String> lessThanLockId=sortedSet.headSet(lockID);
             if(!lessThanLockId.isEmpty()){
+                // 获取该集合的最后一个节点，及当前节点的上一个节点
                 String prevLockID=lessThanLockId.last();//拿到比当前LOCKID这个几点更小的上一个节点
-                zooKeeper.exists(prevLockID,new LockWatcher(countDownLatch));
-                countDownLatch.await(sessionTimeout, TimeUnit.MILLISECONDS);
+                zooKeeper.exists(prevLockID,new LockWatcher(countDownLatch)); // watch监听上一个节点被删除
+                countDownLatch.await(sessionTimeout, TimeUnit.MILLISECONDS); // 线程等待至回话超时
                 //上面这段代码意味着如果会话超时或者节点被删除（释放）了
                 System.out.println(Thread.currentThread().getName()+" 成功获取锁：["+lockID+"]");
             }

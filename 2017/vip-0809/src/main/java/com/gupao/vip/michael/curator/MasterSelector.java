@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class MasterSelector {
 
-    private final static String CONNECTSTRING="192.168.11.129:2181,192.168.11.134:2181," +
-            "192.168.11.135:2181,192.168.11.136:2181";
+    private final static String CONNECTSTRING="192.168.251.221:2181,192.168.251.124:2181," +
+            "192.168.251.122:2181,192.168.251.11:2181";
 
     private final static String MASTER_PATH="/curator_master_path";
     public static void main(String[] args) {
